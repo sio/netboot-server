@@ -7,11 +7,19 @@ services:
       IPXE_SCRIPT_URL: https://test.url/ipxe.script
     networks:
       - outside
+    cap_add:
+      - NET_ADMIN
+
+  http:
+    image: nginx
+    networks:
+      - outside
 
 networks:
   outside:
     driver: ipvlan
+    driver_opts:
+      parent: eth0
     ipam:
       config:
       - subnet: 192.168.121.0/24
-        gateway: 192.168.121.1
