@@ -32,6 +32,7 @@ KVM_BRIDGE?=bridge0
 KVM_ARGS?=-m $(KVM_MEMORY) -smp $(KVM_CPUS) -boot order=n
 
 boot: boot-bios
+boot-efi: boot-uefi
 
 boot-uefi: KVM_ARGS+=-bios /usr/share/qemu/OVMF.fd
 
