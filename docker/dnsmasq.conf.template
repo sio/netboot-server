@@ -13,15 +13,23 @@ tftp-root=/tftp
 dhcp-boot=ipxe.efi
 
 # Detect BIOS only machines
-dhcp-match=set:bios,option:client-arch,0
-dhcp-boot=tag:bios,undionly.kpxe
+dhcp-vendorclass=set:BIOS,PXEClient:Arch:00000
+dhcp-boot=tag:BIOS,undionly.kpxe
+
+# Detect different UEFI types
+dhcp-vendorclass=set:UEFI32,PXEClient:Arch:00006
+dhcp-boot=tag:UEFI32,ipxe-i386.efi
+dhcp-vendorclass=set:UEFI,PXEClient:Arch:00007
+dhcp-boot=tag:UEFI,ipxe.efi
+dhcp-vendorclass=set:UEFI64,PXEClient:Arch:00009
+dhcp-boot=tag:UEFI64,ipxe.efi
 
 # Detect ipxe requests
-dhcp-match=set:ipxe,175
-dhcp-boot=tag:ipxe,${IPXE_SCRIPT_URL}
+dhcp-userclass=set:iPXE,iPXE
+dhcp-boot=tag:iPXE,${IPXE_SCRIPT_URL}
 
 # PXE menu
 pxe-prompt="Press F8 for boot menu", 3
-pxe-service=X86PC, "Boot from network (UEFI)", ipxe.efi
 pxe-service=X86PC, "Boot from network (BIOS)", undionly.kpxe
+pxe-service=X86PC, "Boot from network (UEFI)", ipxe.efi
 pxe-service=X86PC, "Boot from local hard disk", 0
