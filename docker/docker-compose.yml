@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  netboot:
+    image: ghcr.io/sio/netboot-server:latest
+    environment:
+      IPXE_SCRIPT_URL: https://test.url/ipxe.script
+    networks:
+      - outside
+
+networks:
+  outside:
+    driver: ipvlan
+    ipam:
+      config:
+      - subnet: 192.168.121.0/24
+        gateway: 192.168.121.1
