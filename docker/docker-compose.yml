@@ -17,7 +17,7 @@ services:
 
 networks:
   outside:
-    driver: ipvlan
+    driver: macvlan
     driver_opts:
       parent: eth0
     ipam:
