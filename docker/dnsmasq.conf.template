@@ -1,0 +1,18 @@
+# ProxyDHCP server
+port=0
+log-dhcp
+
+# TFTP server
+enable-tftp
+tftp-root=/tftp
+
+# Use EFI version of ipxe by default
+dhcp-boot=ipxe.efi
+
+# Detect BIOS only machines
+dhcp-match=set:bios,option:client-arch,0
+dhcp-boot=tag:bios,undionly.kpxe
+
+# Detect ipxe requests
+dhcp-match=set:ipxe,175
+dhcp-boot=tag:ipxe,${IPXE_SCRIPT_URL}
