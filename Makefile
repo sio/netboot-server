@@ -17,7 +17,7 @@ push: build
 	$(DOCKER) push "$(DOCKER_TAG)"
 
 serve:
-	$(DOCKER) run "$(DOCKER_TAG)"
+	$(DOCKER) run -it "$(DOCKER_TAG)"
 
 
 

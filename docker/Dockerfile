@@ -2,10 +2,12 @@ FROM debian:bullseye-slim
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        dnsmasq \
+        ca-certificates \
         curl \
+        dnsmasq \
+        gettext-base \
         && \
-    apg-get clean
+    apt-get clean
 
 RUN mkdir -p /tftp && \
     curl -L https://boot.ipxe.org/ipxe.efi -o /tftp/ipxe.efi && \
