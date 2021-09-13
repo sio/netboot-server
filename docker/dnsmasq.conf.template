@@ -3,7 +3,6 @@ port=0
 
 # Enable ProxyDHCP
 dhcp-range=${IPXE_SERVER_IP},proxy
-dhcp-option=66,${IPXE_SERVER_IP}
 log-dhcp
 
 # TFTP server
