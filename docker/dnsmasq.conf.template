@@ -1,5 +1,9 @@
-# ProxyDHCP server
+# Disable DNS server
 port=0
+
+# Enable ProxyDHCP
+dhcp-range=${IPXE_SERVER_IP},proxy
+dhcp-option=66,${IPXE_SERVER_IP}
 log-dhcp
 
 # TFTP server
@@ -16,3 +20,9 @@ dhcp-boot=tag:bios,undionly.kpxe
 # Detect ipxe requests
 dhcp-match=set:ipxe,175
 dhcp-boot=tag:ipxe,${IPXE_SCRIPT_URL}
+
+# PXE menu
+pxe-prompt="Press F8 for boot menu", 3
+pxe-service=X86PC, "Boot from network (UEFI)", ipxe.efi
+pxe-service=X86PC, "Boot from network (BIOS)", undionly.kpxe
+pxe-service=X86PC, "Boot from local hard disk", 0

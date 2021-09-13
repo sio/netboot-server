@@ -4,4 +4,5 @@ IFS=$'\n\t'
 
 set -x
 envsubst < /etc/dnsmasq.conf.template > /etc/dnsmasq.conf
+nl /etc/dnsmasq.conf
 dnsmasq --no-daemon "$@"
