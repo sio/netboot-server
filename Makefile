@@ -24,12 +24,15 @@ serve:
 ##
 ## Manual testing
 ##
+## Configure the bridge first:
+## export KVM_ARGS='-netdev bridge,id=n1,br=virbr1 -device virtio-net-pci,netdev=n1'
 
 KVM?=/usr/bin/qemu-system-x86_64
 KVM_MEMORY?=1G
 KVM_CPUS?=2
 KVM_BRIDGE?=bridge0
-KVM_ARGS?=-m $(KVM_MEMORY) -smp $(KVM_CPUS) -boot order=n
+KVM_ARGS?=
+KVM_ARGS+=-m $(KVM_MEMORY) -smp $(KVM_CPUS) -boot order=n
 
 boot: boot-bios
 boot-efi: boot-uefi
