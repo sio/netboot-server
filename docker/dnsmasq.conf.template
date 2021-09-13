@@ -28,7 +28,7 @@ dhcp-boot=tag:UEFI64,ipxe.efi
 dhcp-userclass=set:iPXE,iPXE
 dhcp-boot=tag:iPXE,${IPXE_SCRIPT_URL}
 
-# PXE menu
+# PXE menu (dnsmasq does not send DHCP replies if no menu is configured)
 pxe-prompt="Press F8 for boot menu", 3
 pxe-service=X86PC, "Boot from network (BIOS)", undionly.kpxe
 pxe-service=X86PC, "Boot from network (UEFI)", ipxe.efi
