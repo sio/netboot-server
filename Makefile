@@ -20,8 +20,8 @@ push: build
 serve: serve-pxe serve-http
 
 serve-stop:
-	cd docker && $(DOCKER_COMPOSE) down -t 0
-	cd ipxe && $(DOCKER_COMPOSE) down -t 0
+	-cd docker && $(DOCKER_COMPOSE) down -t 0
+	-cd ipxe && $(DOCKER_COMPOSE) down -t 0
 
 serve-pxe:
 	cd docker && $(DOCKER_COMPOSE) up &
