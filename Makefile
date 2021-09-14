@@ -33,8 +33,6 @@ serve-http:
 ##
 ## Manual testing
 ##
-## Configure the bridge first:
-## export KVM_ARGS='-netdev bridge,id=n1,br=virbr1 -device virtio-net-pci,netdev=n1'
 
 KVM?=/usr/bin/qemu-system-x86_64
 KVM_MEMORY?=1G
@@ -60,9 +58,14 @@ boot-bios boot-uefi: bridge-check
 bridge-check: KVM_BRIDGE_CONF=/etc/qemu/bridge.conf
 bridge-check: KVM_BRIDGE_HELPER=/usr/lib/qemu/qemu-bridge-helper
 bridge-check:
+	@# Check if bridge exists
+	@  ip addr show $(KVM_BRIDGE) > /dev/null
 	@# Check for setuid bit <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691138>
 	@  test 4755 -eq $$(stat --printf=%a $(KVM_BRIDGE_HELPER)) \
 	|| echo 'Warning: setuid bit not set: chmod 4755 $(KVM_BRIDGE_HELPER)'
+	@# Fail if qemu-bridge-helper does not exist at provided path.
+	@# Error message will be printed by stat (see above)
+	@  test -e $(KVM_BRIDGE_HELPER)
 	@# Check for allowed bridge interfaces
 	@  grep -qE 'allow\s+$(KVM_BRIDGE)' $(KVM_BRIDGE_CONF) \
 	|| echo 'Warning: add line "allow $(KVM_BRIDGE)" to $(KVM_BRIDGE_CONF)'
