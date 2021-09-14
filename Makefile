@@ -58,7 +58,12 @@ boot-bios boot-uefi: bridge-check
 	$(KVM) $(KVM_ARGS)
 
 bridge-check: KVM_BRIDGE_CONF=/etc/qemu/bridge.conf
+bridge-check: KVM_BRIDGE_HELPER=/usr/lib/qemu/qemu-bridge-helper
 bridge-check:
+	@# Check for setuid bit <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691138>
+	@  test 4755 -eq $$(stat --printf=%a $(KVM_BRIDGE_HELPER)) \
+	|| echo 'Warning: setuid bit not set: chmod 4755 $(KVM_BRIDGE_HELPER)'
+	@# Check for allowed bridge interfaces
 	@  grep -qE 'allow\s+$(KVM_BRIDGE)' $(KVM_BRIDGE_CONF) \
 	|| echo 'Warning: add line "allow $(KVM_BRIDGE)" to $(KVM_BRIDGE_CONF)'
 
