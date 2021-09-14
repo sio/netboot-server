@@ -10,7 +10,7 @@ DOCKER_REGISTRY_USER?=sio
 DOCKER_REGISTRY_PASS?=
 
 build:
-	cd docker && $(DOCKER) build --tag "$(DOCKER_TAG)" .
+	cd docker && $(DOCKER) build --pull --tag "$(DOCKER_TAG)" .
 
 push: export DOCKER_REGISTRY_PASS
 push: build
