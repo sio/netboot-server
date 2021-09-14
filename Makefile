@@ -17,9 +17,16 @@ push: build
 	echo $$DOCKER_REGISTRY_PASS | $(DOCKER) login -u $(DOCKER_REGISTRY_USER) --password-stdin $(DOCKER_REGISTRY)
 	$(DOCKER) push "$(DOCKER_TAG)"
 
-serve:
-	cd docker && $(DOCKER_COMPOSE) up
+serve: serve-pxe serve-http
+	@-sleep infinity
+	cd docker && $(DOCKER_COMPOSE) down -t 0
+	cd ipxe && $(DOCKER_COMPOSE) down -t 0
 
+serve-pxe:
+	cd docker && $(DOCKER_COMPOSE) up -d
+
+serve-http:
+	cd ipxe && $(DOCKER_COMPOSE) up -d
 
 
 ##

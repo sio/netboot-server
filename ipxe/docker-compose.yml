@@ -1,0 +1,11 @@
+# Simple HTTP server
+
+version: '3'
+
+services:
+  http:
+    image: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - .:/usr/share/nginx/html:ro
