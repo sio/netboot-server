@@ -30,14 +30,20 @@ serve:
 KVM?=/usr/bin/qemu-system-x86_64
 KVM_MEMORY?=1G
 KVM_CPUS?=2
-KVM_BRIDGE?=bridge0
+KVM_BRIDGE?=virbr1
 KVM_ARGS?=
 KVM_ARGS+=-m $(KVM_MEMORY) -smp $(KVM_CPUS) -boot order=n
+KVM_ARGS+=-netdev bridge,id=net0,br=$(KVM_BRIDGE) -device virtio-net-pci,netdev=net0
 
 boot: boot-bios
 boot-efi: boot-uefi
 
 boot-uefi: KVM_ARGS+=-bios /usr/share/qemu/OVMF.fd
 
-boot-bios boot-uefi:
+boot-bios boot-uefi: bridge-check
 	$(KVM) $(KVM_ARGS)
+
+bridge-check: KVM_BRIDGE_CONF=/etc/qemu/bridge.conf
+bridge-check:
+	@  grep -qE 'allow\s+$(KVM_BRIDGE)' $(KVM_BRIDGE_CONF) \
+	|| echo 'Warning: add line "allow $(KVM_BRIDGE)" to $(KVM_BRIDGE_CONF)'
