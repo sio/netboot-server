@@ -9,7 +9,7 @@ services:
     image: ghcr.io/sio/netboot-server:latest
     environment:
       IPXE_SCRIPT_URL: ${IPXE_SCRIPT_URL:-http://boot.netboot.xyz}  # HTTPS is not supported by default
-      IPXE_SERVER_IP: ${IPXE_SERVER_IP}
+      IPXE_SERVER_IP: ${IPXE_SERVER_IP:?required variable}
     networks:
       - outside
     cap_add:
@@ -22,4 +22,4 @@ networks:
       parent: ${IPXE_INTERFACE:-eth0}
     ipam:
       config:
-        - subnet: ${IPXE_SERVER_SUBNET}
+        - subnet: ${IPXE_SERVER_SUBNET:?required variable}
