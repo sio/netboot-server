@@ -12,7 +12,7 @@ DOCKER_REGISTRY_PASS?=
 build:
 	cd docker && $(DOCKER) build --pull --tag "$(DOCKER_TAG)" .
 
-push: export DOCKER_REGISTRY_PASS
+export DOCKER_REGISTRY_PASS
 push: build
 	echo $$DOCKER_REGISTRY_PASS | $(DOCKER) login -u $(DOCKER_REGISTRY_USER) --password-stdin $(DOCKER_REGISTRY)
 	$(DOCKER) push "$(DOCKER_TAG)"
