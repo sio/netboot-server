@@ -18,15 +18,16 @@ push: build
 	$(DOCKER) push "$(DOCKER_TAG)"
 
 serve: serve-pxe serve-http
-	@-sleep infinity
+
+serve-stop:
 	cd docker && $(DOCKER_COMPOSE) down -t 0
 	cd ipxe && $(DOCKER_COMPOSE) down -t 0
 
 serve-pxe:
-	cd docker && $(DOCKER_COMPOSE) up -d
+	cd docker && $(DOCKER_COMPOSE) up &
 
 serve-http:
-	cd ipxe && $(DOCKER_COMPOSE) up -d
+	cd ipxe && $(DOCKER_COMPOSE) up &
 
 
 ##
