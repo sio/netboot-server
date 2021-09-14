@@ -31,9 +31,14 @@ KVM?=/usr/bin/qemu-system-x86_64
 KVM_MEMORY?=1G
 KVM_CPUS?=2
 KVM_BRIDGE?=virbr1
+KVM_MONITOR=qemu-monitor.socket
 KVM_ARGS?=
 KVM_ARGS+=-m $(KVM_MEMORY) -smp $(KVM_CPUS) -boot order=n
 KVM_ARGS+=-netdev bridge,id=net0,br=$(KVM_BRIDGE) -device virtio-net-pci,netdev=net0
+KVM_ARGS+=-monitor unix:$(KVM_MONITOR),server,nowait
+ifdef KVM_NOGRAPHIC
+KVM_ARGS+=-nographic
+endif
 
 boot: boot-bios
 boot-efi: boot-uefi
@@ -47,3 +52,6 @@ bridge-check: KVM_BRIDGE_CONF=/etc/qemu/bridge.conf
 bridge-check:
 	@  grep -qE 'allow\s+$(KVM_BRIDGE)' $(KVM_BRIDGE_CONF) \
 	|| echo 'Warning: add line "allow $(KVM_BRIDGE)" to $(KVM_BRIDGE_CONF)'
+
+qemu-monitor:
+	socat - UNIX-CONNECT:$(KVM_MONITOR)
