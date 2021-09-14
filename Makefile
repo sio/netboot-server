@@ -3,6 +3,7 @@
 ##
 
 DOCKER?=docker
+DOCKER_COMPOSE?=docker-compose
 DOCKER_TAG?=ghcr.io/sio/netboot-server:latest
 DOCKER_REGISTRY?=ghcr.io
 DOCKER_REGISTRY_USER?=sio
@@ -17,7 +18,7 @@ push: build
 	$(DOCKER) push "$(DOCKER_TAG)"
 
 serve:
-	$(DOCKER) run -it "$(DOCKER_TAG)"
+	cd docker && $(DOCKER_COMPOSE) up
 
 
 
