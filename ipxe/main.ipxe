@@ -1,0 +1,5 @@
+#!ipxe
+chain ${net0/mac:hexhyp}.ipxe ||
+
+echo Reached the end of iPXE script
+shell
