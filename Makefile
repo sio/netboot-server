@@ -72,3 +72,6 @@ bridge-check:
 
 qemu-monitor:
 	socat - UNIX-CONNECT:$(KVM_MONITOR)
+
+tcpdump:
+	tcpdump -n -i $(KVM_BRIDGE) port 67 and port 68
