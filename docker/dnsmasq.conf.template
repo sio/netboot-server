@@ -5,6 +5,9 @@ port=0
 dhcp-range=${IPXE_SERVER_IP},proxy
 log-dhcp
 
+# Compatibility with old and broken DHCP clients
+dhcp-no-override
+
 # TFTP server
 enable-tftp
 tftp-root=/tftp
