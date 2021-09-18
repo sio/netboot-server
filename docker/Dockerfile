@@ -3,7 +3,11 @@
 #
 FROM debian:bullseye-slim as ipxe-build
 ARG IPXE_VERSION=2265a65191d76ce367913a61c97752ab88ab1a59
+
+ADD http://ca.ipxe.org/ca.crt /ipxe/ca.crt
+ENV TRUST=/ipxe/ca.crt
 #ENV DEBUG=tcp,dns
+
 ADD https://github.com/ipxe/ipxe/archive/$IPXE_VERSION.tar.gz /ipxe.tar.gz
 WORKDIR /ipxe
 COPY ipxe-general.h /ipxe/src/config/local/general.h
