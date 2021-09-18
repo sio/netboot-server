@@ -16,6 +16,7 @@ RUN tar zxvf /ipxe.tar.gz --strip-components=1 && \
     apt-get install -y --no-install-recommends \
         build-essential \
         liblzma-dev \
+        openssl \
         && \
     make -C src -j$(nproc) \
         bin/ipxe.pxe \
