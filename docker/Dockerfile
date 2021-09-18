@@ -2,7 +2,8 @@
 # Build ipxe from source
 #
 FROM debian:bullseye-slim as ipxe-build
-ARG IPXE_VERSION=v1.21.1
+ARG IPXE_VERSION=2265a65191d76ce367913a61c97752ab88ab1a59
+ENV DEBUG=tcp,dns
 ADD https://github.com/ipxe/ipxe/archive/$IPXE_VERSION.tar.gz /ipxe.tar.gz
 WORKDIR /ipxe
 RUN tar zxvf /ipxe.tar.gz --strip-components=1 && \
