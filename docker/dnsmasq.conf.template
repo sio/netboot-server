@@ -8,6 +8,9 @@ log-dhcp
 # Compatibility with old and broken DHCP clients
 dhcp-no-override
 
+# Disable multicast and broadcast discovery, download the boot file immediately
+dhcp-option=vendor:PXEClient,6,2b
+
 # TFTP server
 enable-tftp
 tftp-root=/tftp
