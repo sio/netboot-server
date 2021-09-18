@@ -4,18 +4,23 @@
 
 DOCKER?=docker
 DOCKER_COMPOSE?=docker-compose
-DOCKER_TAG?=ghcr.io/sio/netboot-server:latest
+DOCKER_IMAGE?=ghcr.io/sio/netboot-server
+DOCKER_TAG?=latest
 DOCKER_REGISTRY?=ghcr.io
 DOCKER_REGISTRY_USER?=sio
 DOCKER_REGISTRY_PASS?=
 
+ifeq (master,$(DOCKER_TAG))
+DOCKER_TAG=latest
+endif
+
 build:
-	cd docker && $(DOCKER) build --pull --tag "$(DOCKER_TAG)" .
+	cd docker && $(DOCKER) build --pull --tag "$(DOCKER_IMAGE):$(DOCKER_TAG)" .
 
 export DOCKER_REGISTRY_PASS
 push: build
 	echo $$DOCKER_REGISTRY_PASS | $(DOCKER) login -u $(DOCKER_REGISTRY_USER) --password-stdin $(DOCKER_REGISTRY)
-	$(DOCKER) push "$(DOCKER_TAG)"
+	$(DOCKER) push "$(DOCKER_IMAGE):$(DOCKER_TAG)"
 
 serve: serve-pxe serve-http
 
