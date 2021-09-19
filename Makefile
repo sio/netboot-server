@@ -16,7 +16,7 @@ DOCKER_TAG?=latest
 endif
 
 ifeq (master,$(DOCKER_TAG))
-$(error Use latest instead of master for Docker tags)
+DOCKER_TAG=latest
 endif
 
 build:
