@@ -5,13 +5,18 @@
 DOCKER?=docker
 DOCKER_COMPOSE?=docker-compose
 DOCKER_IMAGE?=ghcr.io/sio/netboot-server
-DOCKER_TAG?=latest
 DOCKER_REGISTRY?=ghcr.io
 DOCKER_REGISTRY_USER?=sio
 DOCKER_REGISTRY_PASS?=
 
+ifdef GITHUB_REF
+DOCKER_TAG=$(subst refs/heads/,,$(GITHUB_REF))
+else
+DOCKER_TAG?=latest
+endif
+
 ifeq (master,$(DOCKER_TAG))
-DOCKER_TAG=latest
+$(error Use latest instead of master for Docker tags)
 endif
 
 build:

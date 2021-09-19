@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - run: make push DOCKER_TAG=${GITHUB_REF##*/}
+      - run: make push
         env:
           DOCKER_REGISTRY_PASS: ${{ secrets.DOCKER_REGISTRY_PASS }}
