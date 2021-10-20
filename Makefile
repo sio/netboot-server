@@ -51,10 +51,13 @@ KVM_BRIDGE?=virbr1
 KVM_MONITOR=qemu-monitor.socket
 KVM_ARGS?=
 KVM_ARGS+=-m $(KVM_MEMORY) -smp $(KVM_CPUS) -boot order=n
-KVM_ARGS+=-netdev bridge,id=net0,br=$(KVM_BRIDGE) -device virtio-net-pci,netdev=net0
+KVM_ARGS+=-netdev bridge,id=net0,br=$(KVM_BRIDGE) -device virtio-net-pci$(KVM_NIC_ROM),netdev=net0
 KVM_ARGS+=-monitor unix:$(KVM_MONITOR),server,nowait
 ifdef KVM_NOGRAPHIC
 KVM_ARGS+=-nographic
+endif
+ifdef KVM_NOIPXE
+KVM_NIC_ROM=,romfile=
 endif
 
 boot: boot-bios
